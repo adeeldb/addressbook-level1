@@ -67,6 +67,7 @@ public class AddressBook {
      */
     private static final String MESSAGE_ADDED = "New person added: %1$s, Phone: %2$s, Email: %3$s";
     private static final String MESSAGE_ADDRESSBOOK_CLEARED = "Address book has been cleared!";
+    private static final String MESSAGE_ADDRESSBOOK_SORTED = "Address book is now sorted by name.";
     private static final String MESSAGE_COMMAND_HELP = "%1$s: %2$s";
     private static final String MESSAGE_COMMAND_HELP_PARAMETERS = "\tParameters: %1$s";
     private static final String MESSAGE_COMMAND_HELP_EXAMPLE = "\tExample: %1$s";
@@ -132,6 +133,10 @@ public class AddressBook {
     private static final String COMMAND_EXIT_WORD = "exit";
     private static final String COMMAND_EXIT_DESC = "Exits the program.";
     private static final String COMMAND_EXIT_EXAMPLE = COMMAND_EXIT_WORD;
+
+    private static final String COMMAND_SORT_WORD = "sort";
+    private static final String COMMAND_SORT_DESC = "Sorts the program.";
+    private static final String COMMAND_SORT_EXAMPLE = COMMAND_SORT_WORD;
 
     private static final String DIVIDER = "===================================================";
 
@@ -377,6 +382,8 @@ public class AddressBook {
             return executeListAllPersonsInAddressBook();
         case COMMAND_DELETE_WORD:
             return executeDeletePerson(commandArgs);
+        case COMMAND_SORT_WORD:
+             return executeSortPersons();
         case COMMAND_CLEAR_WORD:
             return executeClearAddressBook();
         case COMMAND_HELP_WORD:
@@ -387,6 +394,16 @@ public class AddressBook {
             return getMessageForInvalidCommandInput(commandType, getUsageInfoForAllCommands());
         }
     }
+
+
+    /**
+    * Sorts all entries in alphabetical order
+    * @return operation result message
+    */
+    private static String executeSortPersons() {
+        ALL_PERSONS.sort((p1, p2) -> p1[0].charAt(0) - p2[0].charAt(0));
+        return MESSAGE_ADDRESSBOOK_SORTED;
+     }
 
     /**
      * Splits raw user input into command word and command arguments string
